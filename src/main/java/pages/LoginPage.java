@@ -32,7 +32,8 @@ public class LoginPage extends BasePage {
     public void login(User user){
         inputEmail.sendKeys(user.getEmail());
         btnContinue.click();
-pause(5);
+  // pause(5);
+        clickWait(inputPassword,5);
         inputPassword.sendKeys(user.getPassword());
         btnLogin.click();
 
