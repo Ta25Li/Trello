@@ -9,6 +9,8 @@ import org.testng.annotations.Test;
 import pages.BoardsPage;
 import pages.HomePage;
 import pages.LoginPage;
+import pages.MyBoardPage;
+import static utils.RandomUtils.*;
 
 public class BoardsTest extends AppManager {
 
@@ -25,10 +27,26 @@ public class BoardsTest extends AppManager {
     @Test
     public void createNewBoardPositive(){
         Board board = Board.builder()
-                .boardTitle("new1")
+                .boardTitle(generateString(5))
                 .build();
 
         new BoardsPage(getDriver()).createNewBoard(board);
-    }
 
+     //   Assert.assertTrue(new MyBoardPage(getDriver()).validateBoardName("new1",5));
+        Assert.assertTrue(new MyBoardPage(getDriver()).validateBoardName(board.getBoardTitle(), 5));
+
+    }
+//===========negative==================
+
+    @Test
+    public void createNewBoardNegative(){
+        Board board = Board.builder()
+                .boardTitle("")
+                .build();
+
+        new BoardsPage(getDriver()).createNewBoardNegative(board);
+
+        Assert.assertTrue(new BoardsPage(getDriver()).buttonCreateNotClickable());
+
+    }
 }

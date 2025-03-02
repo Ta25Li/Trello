@@ -1,5 +1,7 @@
 package pages;
 
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -25,5 +27,15 @@ public class BasePage {
                 .until(ExpectedConditions.elementToBeClickable(element)).click();
     }
 
+    public boolean validateTextInElementWait(WebElement element, String text, int time) {
+        try {
+            return new WebDriverWait(driver, time)
+                    .until(ExpectedConditions.textToBePresentInElement(element, text));
+        } catch (NoSuchElementException | TimeoutException exception) {
+            System.out.println("Created Exception" + exception.getMessage());
+            return false;
+        }
+
+    }
 
 }
