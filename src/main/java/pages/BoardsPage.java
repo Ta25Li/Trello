@@ -29,6 +29,12 @@ public class BoardsPage extends BasePage {
 @FindBy(xpath = "//div[@class='board-tile-details is-badged']")
 WebElement firstBoard;
 
+@FindBy(xpath = "//span[text()='Board deleted.']")
+WebElement popUpMsgDelete;
+
+public boolean validatePopUpMsg(String text){
+    return validateTextInElementWait(popUpMsgDelete,text,5);
+}
 
 public void openFirstBoard(){
     firstBoard.click();
@@ -40,7 +46,8 @@ public void openFirstBoard(){
     }
 
     public void createNewBoard(Board board){
-        btnCreateNewBoard.click();
+        clickWait(btnCreateNewBoard,5);
+
         inputBoardTitle.sendKeys(board.getBoardTitle());
         clickWait(btnCreateBoardSubmit,5);
 
