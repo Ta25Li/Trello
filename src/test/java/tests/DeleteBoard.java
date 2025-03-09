@@ -24,7 +24,8 @@ public class DeleteBoard extends AppManager {
                 .email("2885921@gmail.com")
                 .password("QAtesting2025")
                 .build();
-      //  logger.info("start method ->"+method.getName() + "  with user "+ user);
+       logger.info("start method ---> "+method.getName() + "  with user "+ user);
+
         new HomePage(getDriver()).clickBtnLogin();
         new LoginPage(getDriver()).login(user);
         boardsPage = new BoardsPage(getDriver());

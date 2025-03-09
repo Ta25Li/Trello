@@ -32,6 +32,22 @@ WebElement firstBoard;
 @FindBy(xpath = "//span[text()='Board deleted.']")
 WebElement popUpMsgDelete;
 
+@FindBy(xpath = "//button[@data-testid='header-member-menu-button']")
+WebElement btnAccount;
+
+@FindBy (xpath = "//a//span[text()='Manage account']")
+WebElement btnManageAccount;
+
+
+
+
+
+public void openMyAccount(){
+    clickWait(btnAccount,3);
+    clickWait(btnManageAccount,3);
+}
+
+
 public boolean validatePopUpMsg(String text){
     return validateTextInElementWait(popUpMsgDelete,text,5);
 }
