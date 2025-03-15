@@ -28,6 +28,13 @@ public class AtlassianProfilePage extends BasePage {
     @FindBy(xpath = "//span[text()='Upload']")
     WebElement btnUpload;
 
+    @FindBy(xpath = "//div[@class='css-1748k3u']")
+    WebElement popUpMessage;
+
+    @FindBy (id = "drag-zone-text")
+    WebElement popUpWrongFormatImage;
+
+
     public void changeMyProfilePhoto(String photoPath) {
         //   clickWait(btnProfilePhoto,3);
         Actions actions = new Actions(driver);
@@ -40,5 +47,12 @@ public class AtlassianProfilePage extends BasePage {
         clickWait(btnUpload,3);
     }
 
+    public boolean validateMessage(String text){
+        return validateTextInElementWait(popUpMessage,text,10);
+    }
+
+    public boolean validateMessageWrongFormatFile(String text){
+        return validateTextInElementWait(popUpWrongFormatImage,text,10);
+    }
 
 }
