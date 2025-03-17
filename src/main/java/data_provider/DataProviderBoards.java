@@ -3,6 +3,14 @@ package data_provider;
 import dto.Board;
 import org.testng.annotations.DataProvider;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import static utils.RandomUtils.*;
 
 public class DataProviderBoards {
@@ -15,5 +23,28 @@ public class DataProviderBoards {
         return new Board[]{board1,board2,board3};
 //test will go 3 times
 
+    }
+
+    @DataProvider
+    public Iterator<Board> newBoardDPFile(){
+        List<Board> boardList= new ArrayList<>();
+        BufferedReader bufferedReader;
+        try {
+            bufferedReader = new BufferedReader(new FileReader("src/main/resources/Board_title.csv"));
+            try {
+                String line = bufferedReader.readLine();
+                while (line != null){
+                    boardList.add(Board.builder().boardTitle(line).build());
+                    line = bufferedReader.readLine();
+
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return boardList.listIterator();
     }
 }

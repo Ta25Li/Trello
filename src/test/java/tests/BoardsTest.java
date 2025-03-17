@@ -15,7 +15,7 @@ import static utils.RandomUtils.*;
 
 public class BoardsTest extends AppManager {
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void login(){
         User user = User.builder()
                 .email("2885921@gmail.com")
@@ -25,7 +25,7 @@ public class BoardsTest extends AppManager {
         new HomePage(getDriver()).clickBtnLogin();
         new LoginPage(getDriver()).login(user);
     }
-    @Test
+    @Test(groups ={"smoke","regres"})
     public void createNewBoardPositive(){
         Board board = Board.builder()
                 .boardTitle(generateString(5))
@@ -53,6 +53,16 @@ public class BoardsTest extends AppManager {
     }
     @Test(dataProvider = "newBoardDP", dataProviderClass = DataProviderBoards.class)
     public void createNewBoardPositiveWithDP(Board board){
+
+        new BoardsPage(getDriver()).createNewBoard(board);
+
+
+        Assert.assertTrue(new MyBoardPage(getDriver())
+                .validateBoardName(board.getBoardTitle(), 5));
+
+    }
+    @Test(dataProvider = "newBoardDPFile", dataProviderClass = DataProviderBoards.class)
+    public void createNewBoardPositiveWithDPFile(Board board){
 
         new BoardsPage(getDriver()).createNewBoard(board);
 
