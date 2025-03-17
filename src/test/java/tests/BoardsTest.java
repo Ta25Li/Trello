@@ -1,5 +1,6 @@
 package tests;
 
+import data_provider.DataProviderBoards;
 import dto.Board;
 import dto.User;
 import manager.AppManager;
@@ -39,6 +40,7 @@ public class BoardsTest extends AppManager {
 //===========negative==================
 
     @Test
+    //@Test (invocationCount = 3) --- test will go 3 times
     public void createNewBoardNegative(){
         Board board = Board.builder()
                 .boardTitle("")
@@ -49,4 +51,15 @@ public class BoardsTest extends AppManager {
         Assert.assertTrue(new BoardsPage(getDriver()).buttonCreateNotClickable());
 
     }
+    @Test(dataProvider = "newBoardDP", dataProviderClass = DataProviderBoards.class)
+    public void createNewBoardPositiveWithDP(Board board){
+
+        new BoardsPage(getDriver()).createNewBoard(board);
+
+
+        Assert.assertTrue(new MyBoardPage(getDriver())
+                .validateBoardName(board.getBoardTitle(), 5));
+
+    }
+
 }
